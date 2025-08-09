@@ -1,17 +1,15 @@
-import yaml
-
 from ..state.schema import AgentState
 from ..models.llm import LocalLLM
 from ..brain import frontal, temporal, limbic, basal_ganglia, parietal, cerebellum
 from ..memory import store
+from .action_registry import ACTION_REGISTRY
 
 PRIORITY_ORDER = {"comfort": 0, "clarify": 1, "plan": 2, "routine": 3}
 
 
 class ExecutiveController:
-    def __init__(self, registry_path: str = "ecole/action_registry.yaml"):
-        with open(registry_path, "r") as fh:
-            self.registry = yaml.safe_load(fh)
+    def __init__(self, registry=None):
+        self.registry = registry or ACTION_REGISTRY
         self.llm = LocalLLM()
         self.modules = [frontal, temporal, limbic, basal_ganglia, parietal, cerebellum]
 
