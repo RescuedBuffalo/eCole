@@ -3,3 +3,5 @@ uvicorn
 pydantic
 chromadb
 pyyaml
+httpx
+tenacity
