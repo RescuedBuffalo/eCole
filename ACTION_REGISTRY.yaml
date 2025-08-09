@@ -1,0 +1,71 @@
+version: 0.1
+execution_policy: centralized  # "centralized" (only executive executes) or "owner_allow" (owner or executive)
+actions:
+  - id: emit_response
+    owner: executive
+    params:
+      text: { type: string, required: true }
+    permissions:
+      requires_user_consult: false
+      pii_write: false
+      pii_read: false
+      editable_by_user: false
+
+  - id: memory.save
+    owner: temporal
+    params:
+      kind: { type: enum, values: ["event","fact","reflection"], required: true }
+      content: { type: string, required: true }
+      tags: { type: list[string], required: false, default: [] }
+      source: { type: string, required: true }
+    permissions:
+      requires_user_consult: false
+      pii_write: true
+      pii_read: false
+      editable_by_user: true
+
+  - id: memory.query
+    owner: temporal
+    params:
+      query: { type: string, required: true }
+      kind: { type: enum, values: ["event","fact","reflection","any"], required: true }
+      k: { type: integer, required: false, default: 3, min: 1, max: 50 }
+    permissions:
+      requires_user_consult: false
+      pii_write: false
+      pii_read: true
+      editable_by_user: false
+
+  - id: checklist.create
+    owner: frontal
+    params:
+      title: { type: string, required: true }
+      items: { type: list[string], required: true }
+    permissions:
+      requires_user_consult: false
+      pii_write: false
+      pii_read: false
+      editable_by_user: true
+
+  - id: checklist.update
+    owner: frontal
+    params:
+      checklist_id: { type: string, required: true }
+      item_index: { type: integer, required: true, min: 0 }
+      done: { type: boolean, required: true }
+    permissions:
+      requires_user_consult: false
+      pii_write: false
+      pii_read: false
+      editable_by_user: true
+
+  - id: telemetry.log_event
+    owner: executive
+    params:
+      name: { type: string, required: true }
+      payload: { type: object, required: false, default: {} }
+    permissions:
+      requires_user_consult: false
+      pii_write: false
+      pii_read: false
+      editable_by_user: false

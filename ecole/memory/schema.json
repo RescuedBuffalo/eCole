@@ -1,0 +1,5 @@
+{
+  "events": ["id","ts","role","text","tags","source","run_id"],
+  "facts": ["id","key","value","confidence","tags","updated_ts"],
+  "reflections": ["id","ts","summary","why_it_helped","conditions","tags","run_id"]
+}
