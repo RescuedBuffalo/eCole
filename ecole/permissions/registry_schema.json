@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "actions"],
+  "properties": {
+    "version": {"type": ["number", "string"]},
+    "execution_policy": {
+      "type": "string",
+      "enum": ["centralized", "owner_allow"]
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "params", "permissions"],
+        "properties": {
+          "id": {"type": "string"},
+          "owner": {"type": "string"},
+          "params": {"type": "object"},
+          "permissions": {"type": "object"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
