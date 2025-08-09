@@ -6,17 +6,14 @@ from typing import List, Dict
 from chromadb import Client
 from chromadb.config import Settings
 
+from ..senses.embeddings import DummyEmbeddingFunction
+
 DB_PATH = os.environ.get("ECOLE_DB_PATH", "ecole/data/events.db")
 CHROMA_PATH = os.environ.get("ECOLE_CHROMA_PATH", "ecole/data/chroma")
 
 _conn = None
 _client = None
 _collection = None
-
-
-class DummyEmbeddingFunction:
-    def __call__(self, texts):
-        return [[float(len(t))] for t in texts]
 
 
 def _get_conn():
